@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { compose, flatten, map, prop, reverse, sortBy, take } from 'bukk'
-const Task = require('data.task')
+const { task } = require('folktale/data/task')
 
 const httpGet = url =>
-  new Task((rej, res) => axios.get(url).then(res).catch(rej))
+  task(resolver => axios.get(url).then(resolver.resolve).catch(resolver.reject))
 const getJson = url => httpGet(url).map(res => res.data)
 const getSets = () => getJson('http://mtgjson.com/json/AllSetsArray.json')
 const getCards = () => getSets().map(map(prop('cards'))).map(flatten)
@@ -49,20 +49,22 @@ class Magicalc extends React.Component {
   }
 
   componentDidMount() {
-    getCards().fork(console.error, cards =>
-      this.setState(prevState => ({
-        calculations: [
-          {
-            ...prevState.calculations[0],
-            cards: cardsWithLongestNames(cards)
-          },
-          {
-            ...prevState.calculations[1],
-            cards: cardsWithShortestNames(cards)
-          }
-        ]
-      }))
-    )
+    getCards().run().future().listen({
+      onRejected: console.error,
+      onResolved: cards =>
+        this.setState(prevState => ({
+          calculations: [
+            {
+              ...prevState.calculations[0],
+              cards: cardsWithLongestNames(cards)
+            },
+            {
+              ...prevState.calculations[1],
+              cards: cardsWithShortestNames(cards)
+            }
+          ]
+        }))
+    })
   }
 
   render() {
