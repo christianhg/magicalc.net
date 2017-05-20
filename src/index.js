@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import { compose, flatten, map, prop, reverse, sortBy, take } from 'ramda'
+import { compose, flatten, filter, map, prop, reverse, sortBy, take } from 'ramda'
 const { task } = require('folktale/data/task')
 
 const httpGet = url =>
@@ -12,9 +12,11 @@ const getCards = () => getSets().map(map(prop('cards'))).map(flatten)
 
 const getLength = s => s.length
 const sortByNameLength = sortBy(compose(getLength, prop('name')))
+const sortByTextLength = sortBy(compose(getLength, prop('text')))
 const takeTen = take(10)
 const cardsWithLongestNames = compose(takeTen, reverse, sortByNameLength)
 const cardsWithShortestNames = compose(takeTen, sortByNameLength)
+const cardsWithLeastText = compose(takeTen, sortByTextLength, filter(prop('text')))
 const cardListView = card => <li key={card.id}>{card.name}</li>
 const calculations = [
   {
@@ -25,6 +27,11 @@ const calculations = [
   {
     id: 1,
     title: 'Cards with shortest names',
+    cards: []
+  },
+  {
+    id: 2,
+    title: 'Cards with least text',
     cards: []
   }
 ]
@@ -61,6 +68,10 @@ class Magicalc extends React.Component {
             {
               ...prevState.calculations[1],
               cards: cardsWithShortestNames(cards)
+            },
+            {
+              ...prevState.calculations[2],
+              cards: cardsWithLeastText(cards)
             }
           ]
         }))
