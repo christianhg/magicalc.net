@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import { compose, flatten, map, prop, reverse, sortBy, take } from 'bukk'
+import { compose, flatten, map, prop, reverse, sortBy, take } from 'ramda'
 const { task } = require('folktale/data/task')
 
 const httpGet = url =>
