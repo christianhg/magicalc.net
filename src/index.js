@@ -4,6 +4,8 @@ import axios from 'axios'
 import { compose, flatten, filter, map, prop, reverse, sortBy, take } from 'ramda'
 const { task } = require('folktale/data/task')
 
+import './index.scss'
+
 const httpGet = url =>
   task(resolver => axios.get(url).then(resolver.resolve).catch(resolver.reject))
 const getJson = url => httpGet(url).map(res => res.data)
@@ -38,8 +40,8 @@ const calculations = [
 
 function Calculation(props) {
   return (
-    <div key={props.id}>
-      <h2>{props.title}:</h2>
+    <div key={props.id} className="calculation">
+      <h2>{props.title}</h2>
       <ol>
         {props.cards.map(cardListView)}
       </ol>

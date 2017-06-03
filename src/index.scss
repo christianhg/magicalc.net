@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+@import '~modularscale-sass/stylesheets/modularscale';
+@import '~reset-css/reset';
+
+* {
+  box-sizing: border-box;
+}
+
+$modularscale: (
+  base: 18px,
+  ratio: $phi
+);
+
+$color-black: rgb(40, 40, 40);
+$color-white: rgb(245, 245, 245);
+
+body {
+  background-color: $color-black;
+  color: $color-white;
+  font-family: 'Inconsolata', monospace;
+  font-size: ms(0);
+}
+
+h1 {
+  font-size: ms(2);
+  padding: ms(1);
+}
+
+h2 {
+  font-size: ms(1);
+  margin-bottom: ms(0);
+}
+
+ol {
+  line-height: ms(1);
+
+  li {
+    position: relative;
+    padding-left: 1.5em;
+
+    &:before {
+      content: '_';
+      font-size: 1.4em;
+      position: absolute;
+      margin-left: -1em;
+      top: -0.35em;
+    }
+  }
+}
+
+.calculation {
+  color: $color-black;
+  padding: ms(1);
+
+  @for $i from 1 through 21 {
+    &:nth-child(#{$i}) {
+      background-color: hsl($i * 360 / 20, 100%, 50%);
+    }
+  }
+}
