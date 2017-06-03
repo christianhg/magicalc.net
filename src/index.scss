@@ -6,10 +6,7 @@
   box-sizing: border-box;
 }
 
-$modularscale: (
-  base: 18px,
-  ratio: $phi
-);
+$modularscale: (base: 18px, ratio: $phi);
 
 $color-black: rgb(40, 40, 40);
 $color-white: rgb(245, 245, 245);

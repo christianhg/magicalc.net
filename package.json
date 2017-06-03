@@ -6,7 +6,7 @@
     "dev": "webpack-dev-server",
     "predist": "rm -rf ./dist",
     "dist": "webpack -p",
-    "lint": "prettier --single-quote --no-semi --write './src/**/*.js'"
+    "lint": "prettier --single-quote --no-semi --write './src/**/*.+(js|scss)'"
   },
   "babel": {
     "plugins": [

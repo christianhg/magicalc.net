@@ -1,7 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import { compose, flatten, filter, map, prop, reverse, sortBy, take } from 'ramda'
+import {
+  compose,
+  flatten,
+  filter,
+  map,
+  prop,
+  reverse,
+  sortBy,
+  take
+} from 'ramda'
 const { task } = require('folktale/data/task')
 
 import './index.scss'
@@ -16,12 +25,23 @@ const getLength = s => s.length
 const sortByNameLength = sortBy(compose(getLength, prop('name')))
 const sortByTextLength = sortBy(compose(getLength, prop('text')))
 const sortByToughness = sortBy(prop('toughness'))
-const withToughness = filter(compose(Number.isInteger, Number.parseInt, prop('toughness')))
+const withToughness = filter(
+  compose(Number.isInteger, Number.parseInt, prop('toughness'))
+)
 const takeTen = take(10)
 const cardsWithLongestNames = compose(takeTen, reverse, sortByNameLength)
-const cardsWithMostToughness = compose(takeTen, reverse, sortByToughness, withToughness)
+const cardsWithMostToughness = compose(
+  takeTen,
+  reverse,
+  sortByToughness,
+  withToughness
+)
 const cardsWithShortestNames = compose(takeTen, sortByNameLength)
-const cardsWithLeastText = compose(takeTen, sortByTextLength, filter(prop('text')))
+const cardsWithLeastText = compose(
+  takeTen,
+  sortByTextLength,
+  filter(prop('text'))
+)
 const cardListView = card => <li key={card.id}>{card.name}</li>
 const calculations = [
   {
