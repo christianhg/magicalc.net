@@ -15,8 +15,11 @@ const getCards = () => getSets().map(map(prop('cards'))).map(flatten)
 const getLength = s => s.length
 const sortByNameLength = sortBy(compose(getLength, prop('name')))
 const sortByTextLength = sortBy(compose(getLength, prop('text')))
+const sortByToughness = sortBy(prop('toughness'))
+const withToughness = filter(compose(Number.isInteger, Number.parseInt, prop('toughness')))
 const takeTen = take(10)
 const cardsWithLongestNames = compose(takeTen, reverse, sortByNameLength)
+const cardsWithMostToughness = compose(takeTen, reverse, sortByToughness, withToughness)
 const cardsWithShortestNames = compose(takeTen, sortByNameLength)
 const cardsWithLeastText = compose(takeTen, sortByTextLength, filter(prop('text')))
 const cardListView = card => <li key={card.id}>{card.name}</li>
@@ -34,6 +37,11 @@ const calculations = [
   {
     id: 2,
     title: 'Cards with least text',
+    cards: []
+  },
+  {
+    id: 3,
+    title: 'Cards with most toughness',
     cards: []
   }
 ]
@@ -74,6 +82,10 @@ class Magicalc extends React.Component {
             {
               ...prevState.calculations[2],
               cards: cardsWithLeastText(cards)
+            },
+            {
+              ...prevState.calculations[3],
+              cards: cardsWithMostToughness(cards)
             }
           ]
         }))
