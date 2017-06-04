@@ -27,9 +27,8 @@ const getJson = url => httpGet(url).map(prop('data'))
 const getCards = () =>
   getJson('http://mtgjson.com/json/AllCards.json').map(values).map(map(addId))
 
-const getLength = s => s.length
-const sortByNameLength = sortBy(compose(getLength, prop('name')))
-const sortByTextLength = sortBy(compose(getLength, prop('text')))
+const sortByNameLength = sortBy(compose(prop('length'), prop('name')))
+const sortByTextLength = sortBy(compose(prop('length'), prop('text')))
 const sortByToughness = sortBy(prop('toughness'))
 const withToughness = filter(
   compose(Number.isInteger, Number.parseInt, prop('toughness'))
