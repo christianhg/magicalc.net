@@ -9,17 +9,23 @@ import {
   prop,
   reverse,
   sortBy,
-  take
+  take,
+  values
 } from 'ramda'
+const sha256 = require('sha.js')('sha256')
 const { task } = require('folktale/data/task')
 
 import './index.scss'
 
+const hash = x => sha256.update(x, 'utf-8').digest('hex')
+
+const addId = card => Object.assign({}, card, { id: hash(card.name) })
+
 const httpGet = url =>
   task(resolver => axios.get(url).then(resolver.resolve).catch(resolver.reject))
 const getJson = url => httpGet(url).map(res => res.data)
-const getSets = () => getJson('http://mtgjson.com/json/AllSetsArray.json')
-const getCards = () => getSets().map(map(prop('cards'))).map(flatten)
+const getCards = () =>
+  getJson('http://mtgjson.com/json/AllCards.json').map(values).map(map(addId))
 
 const getLength = s => s.length
 const sortByNameLength = sortBy(compose(getLength, prop('name')))
