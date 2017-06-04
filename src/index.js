@@ -23,7 +23,7 @@ const addId = card => Object.assign({}, card, { id: hash(card.name) })
 
 const httpGet = url =>
   task(resolver => axios.get(url).then(resolver.resolve).catch(resolver.reject))
-const getJson = url => httpGet(url).map(res => res.data)
+const getJson = url => httpGet(url).map(prop('data'))
 const getCards = () =>
   getJson('http://mtgjson.com/json/AllCards.json').map(values).map(map(addId))
 
