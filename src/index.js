@@ -46,7 +46,6 @@ const cardsWithLeastText = compose(
   sortByTextLength,
   filter(prop('text'))
 )
-const cardListView = card => <li key={card.id}>{card.name}</li>
 const calculations = [
   {
     id: 0,
@@ -75,10 +74,14 @@ function Calculation(props) {
     <div key={props.id} className="calculation">
       <h2>{props.title}</h2>
       <ol>
-        {props.cards.map(cardListView)}
+        {props.cards.map(Card)}
       </ol>
     </div>
   )
+}
+
+function Card(props) {
+  return <li key={props.id}>{props.name}</li>
 }
 
 class Magicalc extends React.Component {
