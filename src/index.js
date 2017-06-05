@@ -13,7 +13,7 @@ import {
   values
 } from 'ramda'
 import { h32 } from 'xxhashjs'
-const { task } = require('folktale/data/task')
+import { task } from 'folktale/data/task'
 
 import './index.scss'
 
