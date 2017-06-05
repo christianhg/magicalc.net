@@ -18,8 +18,7 @@ import { task } from 'folktale/data/task'
 import './index.scss'
 
 const hash = x => h32(x, 0).toString(16)
-
-const addId = card => Object.assign({}, card, { id: hash(card.name) })
+const addId = card => ({ ...card, id: hash(card.name) })
 
 const httpGet = url =>
   task(resolver => axios.get(url).then(resolver.resolve).catch(resolver.reject))
