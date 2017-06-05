@@ -12,12 +12,12 @@ import {
   take,
   values
 } from 'ramda'
-const sha256 = require('sha.js')('sha256')
+import { h32 } from 'xxhashjs'
 const { task } = require('folktale/data/task')
 
 import './index.scss'
 
-const hash = x => sha256.update(x, 'utf-8').digest('hex')
+const hash = x => h32(x, 0).toString(16)
 
 const addId = card => Object.assign({}, card, { id: hash(card.name) })
 

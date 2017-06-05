@@ -38,9 +38,9 @@
     "react-dom": "^15.5.4",
     "reset-css": "^2.2.0",
     "sass-loader": "^6.0.5",
-    "sha.js": "^2.4.8",
     "style-loader": "^0.18.1",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "xxhashjs": "^0.2.1"
   }
 }
